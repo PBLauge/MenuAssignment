@@ -6,15 +6,8 @@ namespace Day1
 {
     class Video
     {
-        private int Id;
-        private string Genre;
-
-        public Video(int id, string genre)
-        {
-            Id = id;
-            Genre = genre;
-        }
-
-
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Genre { get; set; }
     }
 }

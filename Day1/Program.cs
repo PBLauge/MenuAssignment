@@ -1,16 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Day1
 {
     class Program
     {
+        private static int id = 1;
+        private static List<Video> videos = new List<Video>();
+
         static void Main(string[] args)
         {
+
+            var vid1 = new Video()
+            {
+                Id = id++,
+                Title = "Saw",
+                Genre = "Horror"
+            };
+            videos.Add(vid1);
+
+            videos.Add(new Video()
+            {
+                Id = id++,
+                Title = "Something with cats",
+                Genre = "Cat video",
+            });
+
             string[] menuItems =
             {
                 "Create video",
-                "Read video",
-                "Update video",
+                "List of videos",
+                "Edit video",
                 "Delete video",
                 "Search video",
                 "Exit"
@@ -22,20 +42,19 @@ namespace Day1
                 switch (selection)
                 {
                     case 1:
-                        Console.WriteLine("\nCreate video");
+                        CreateVideo();
                         break;
                     case 2:
-                        Console.WriteLine("\nRead video");
+                        ListVideos();
                         break;
                     case 3:
-                        Console.WriteLine("\nUpdate video");
+                        EditVideo();
                         break;
                     case 4:
-                        Console.WriteLine("\nDelete video");
+                        DeleteVideo();
                         break;
                     case 5:
-                        Console.WriteLine("\nSearch video");
-                        Console.WriteLine("What would you like to find?");
+                        SearchVideo();
                         break;
                 }
                 Console.ReadLine();
@@ -48,7 +67,80 @@ namespace Day1
             Console.ReadLine();
 
         }
-        
+
+        private static void SearchVideo()
+        {
+            Console.WriteLine("What would you like to search for? \n");
+            var videoFound = FindVideoById();
+            if (videoFound != null)
+            {
+                Console.WriteLine($"The video - {videoFound.Title} - was found.");
+            }
+        }
+
+        private static void DeleteVideo()
+        {
+            var videoFound = FindVideoById();
+            if (videoFound != null)
+            {
+                videos.Remove(videoFound);
+            }
+        }
+
+        private static void EditVideo()
+        {
+            var video = FindVideoById();
+            Console.WriteLine("Title: ");
+            video.Title = Console.ReadLine();
+            Console.WriteLine("Genre: ");
+            video.Genre = Console.ReadLine();
+        }
+
+        private static void ListVideos()
+        {
+            Console.WriteLine("\n List of videos");
+            foreach (var video in videos)
+            {
+                Console.WriteLine($"Id: {video.Id} Title: {video.Title} Genre: {video.Genre}");
+            }
+            Console.WriteLine("\n");
+        }
+
+        private static void CreateVideo()
+        {
+            Console.WriteLine("Title: ");
+            var title = Console.ReadLine();
+
+            Console.WriteLine("Genre: ");
+            var genre = Console.ReadLine();
+
+            videos.Add(new Video()
+            {
+                Id = id++,
+                Title = title,
+                Genre = genre,
+            });
+        }
+
+        static Video FindVideoById()
+        {
+            Console.WriteLine("Please type in a viable id: ");
+            int id;
+            while (!int.TryParse(Console.ReadLine(), out id))
+            {
+                Console.WriteLine("The id is a number...");
+            }
+
+            foreach (var video in videos)
+            {
+                if (video.Id == id)
+                {
+                    return video;
+                }
+            }
+            return null;
+        }
+
         private static int ShowMenu(string[] menuItems)
         {
             Console.Clear();
