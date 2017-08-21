@@ -16,5 +16,8 @@ namespace MenuAppBLL
         Video Update(Video vid);
         //D
         Video Delete(int Id);
+        //Search
+        //Video SearchVideo(Video vid);
+        //Use LINQ "Where clause" Check video 17 for clues.
     }
 }

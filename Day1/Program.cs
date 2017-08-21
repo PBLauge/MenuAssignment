@@ -92,10 +92,18 @@ namespace MenuAppUI
         private static void EditVideo()
         {
             var video = FindVideoById();
-            Console.WriteLine("Title: ");
-            video.Title = Console.ReadLine();
-            Console.WriteLine("Genre: ");
-            video.Genre = Console.ReadLine();
+            if (video != null)
+            {
+                Console.WriteLine("Title: ");
+                video.Title = Console.ReadLine();
+                Console.WriteLine("Genre: ");
+                video.Genre = Console.ReadLine();
+            }
+            else
+            {
+                Console.WriteLine("Video not found");
+            }
+            
         }
 
         private static void ListVideos()
