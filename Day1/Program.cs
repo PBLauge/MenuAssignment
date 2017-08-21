@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using MenuAppEntity;
 
-namespace Day1
+namespace MenuAppUI
 {
     class Program
     {
+        #region FakeDB
         private static int id = 1;
         private static List<Video> videos = new List<Video>();
+        #endregion
+
 
         static void Main(string[] args)
         {

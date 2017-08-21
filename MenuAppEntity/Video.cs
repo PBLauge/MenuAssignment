@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Day1
+namespace MenuAppEntity
 {
-    class Video
+    public class Video
     {
         public int Id { get; set; }
         public string Title { get; set; }
