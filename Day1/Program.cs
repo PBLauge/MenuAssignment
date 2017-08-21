@@ -1,34 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using MenuAppBLL;
 using MenuAppEntity;
 
 namespace MenuAppUI
 {
     class Program
     {
-        #region FakeDB
-        private static int id = 1;
-        private static List<Video> videos = new List<Video>();
-        #endregion
-
+        static BLLFacade bllFacade = new BLLFacade();
 
         static void Main(string[] args)
         {
 
-            var vid1 = new Video()
+            bllFacade.Service.Create(new Video()
             {
-                Id = id++,
                 Title = "Saw",
                 Genre = "Horror"
-            };
-            videos.Add(vid1);
+             });
 
-            videos.Add(new Video()
+            bllFacade.Service.Create(new Video()
             {
-                Id = id++,
-                Title = "Something with cats",
+                Title = "Cat does stuff",
                 Genre = "Cat video",
             });
+
 
             string[] menuItems =
             {
@@ -36,12 +30,12 @@ namespace MenuAppUI
                 "List of videos",
                 "Edit video",
                 "Delete video",
-                "Search video",
+                //"Search video",
                 "Exit"
             };
 
             var selection = ShowMenu(menuItems);
-            while (selection != 6)
+            while (selection != 5)
             {
                 switch (selection)
                 {
@@ -57,9 +51,9 @@ namespace MenuAppUI
                     case 4:
                         DeleteVideo();
                         break;
-                    case 5:
-                        SearchVideo();
-                        break;
+                    //case 5:
+                    //    SearchVideo();
+                    //    break;
                 }
                 Console.ReadLine();
                 selection = ShowMenu(menuItems);
@@ -72,22 +66,26 @@ namespace MenuAppUI
 
         }
 
-        private static void SearchVideo()
-        {
-            Console.WriteLine("What would you like to search for? \n");
-            var videoFound = FindVideoById();
-            if (videoFound != null)
-            {
-                Console.WriteLine($"The video - {videoFound.Title} - was found.");
-            }
-        }
+        //private static void SearchVideo()
+        //{
+        //    Console.WriteLine("What would you like to search for? \n");
+        //    var videoFound = FindVideoById();
+        //    if (videoFound != null)
+        //    {
+        //        Console.WriteLine($"The video - {videoFound.Title} - was found.");
+        //    }
+        //}
 
         private static void DeleteVideo()
         {
             var videoFound = FindVideoById();
             if (videoFound != null)
             {
-                videos.Remove(videoFound);
+                bllFacade.Service.Delete(videoFound.Id);
+            }
+            else
+            {
+                Console.WriteLine("Video not found");
             }
         }
 
@@ -103,9 +101,9 @@ namespace MenuAppUI
         private static void ListVideos()
         {
             Console.WriteLine("\n List of videos");
-            foreach (var video in videos)
+            foreach (var video in bllFacade.Service.GetAll())
             {
-                Console.WriteLine($"Id: {video.Id} Title: {video.Title} Genre: {video.Genre}");
+                Console.WriteLine($"Id: {video.Id} Title: {video.Title} | Genre: {video.Genre}");
             }
             Console.WriteLine("\n");
         }
@@ -118,9 +116,8 @@ namespace MenuAppUI
             Console.WriteLine("Genre: ");
             var genre = Console.ReadLine();
 
-            videos.Add(new Video()
+            bllFacade.Service.Create(new Video()
             {
-                Id = id++,
                 Title = title,
                 Genre = genre,
             });
@@ -135,14 +132,7 @@ namespace MenuAppUI
                 Console.WriteLine("The id is a number...");
             }
 
-            foreach (var video in videos)
-            {
-                if (video.Id == id)
-                {
-                    return video;
-                }
-            }
-            return null;
+            return bllFacade.Service.Get(id);
         }
 
         private static int ShowMenu(string[] menuItems)
@@ -161,7 +151,7 @@ namespace MenuAppUI
                 || selection > 6
                 )
             {
-                Console.WriteLine("You need to select a number between 1 and 6");
+                Console.WriteLine("You need to select a number between 1 and 5");
             }
             
             return selection;
