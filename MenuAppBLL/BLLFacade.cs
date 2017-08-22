@@ -8,14 +8,9 @@ namespace MenuAppBLL
 {
     public class BLLFacade
     {
-        public IService GetService()
-        {
-            return new Service();
-        }
-
         public IService Service
         {
-            get { return new Service();}
+            get { return new Service(new DALFacade().VideoRepository);}
         }
     }
 }

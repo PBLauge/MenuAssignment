@@ -30,12 +30,12 @@ namespace MenuAppUI
                 "List of videos",
                 "Edit video",
                 "Delete video",
-                //"Search video",
+                "Search video",
                 "Exit"
             };
 
             var selection = ShowMenu(menuItems);
-            while (selection != 5)
+            while (selection != 6)
             {
                 switch (selection)
                 {
@@ -51,9 +51,9 @@ namespace MenuAppUI
                     case 4:
                         DeleteVideo();
                         break;
-                    //case 5:
-                    //    SearchVideo();
-                    //    break;
+                    case 5:
+                        SearchVideo();
+                        break;
                 }
                 Console.ReadLine();
                 selection = ShowMenu(menuItems);
@@ -66,15 +66,26 @@ namespace MenuAppUI
 
         }
 
-        //private static void SearchVideo()
-        //{
-        //    Console.WriteLine("What would you like to search for? \n");
-        //    var videoFound = FindVideoById();
-        //    if (videoFound != null)
-        //    {
-        //        Console.WriteLine($"The video - {videoFound.Title} - was found.");
-        //    }
-        //}
+        private static void SearchVideo()
+        {
+            Console.WriteLine("What is the title of what you want to find? \n");
+            var entryFound = Console.ReadLine();
+            var videoFound = bllFacade.Service.FindVideoByTitle(entryFound);
+            if (videoFound != null && videoFound.Count > 0)
+            {
+                foreach (var Video in videoFound)
+                {
+                    Console.WriteLine($"Video found: Title: {Video.Title} Genre: {Video.Genre}");
+                }
+                //Console.WriteLine($"\nThe video was found: {videoFound}");
+            }
+            else
+            {
+                Console.WriteLine("Video not found.");
+            }
+
+            
+        }
 
         private static void DeleteVideo()
         {
@@ -83,10 +94,9 @@ namespace MenuAppUI
             {
                 bllFacade.Service.Delete(videoFound.Id);
             }
-            else
-            {
-                Console.WriteLine("Video not found");
-            }
+            
+            var response = videoFound == null ? "Video not found." : "Video deleted.";
+            Console.WriteLine(response);
         }
 
         private static void EditVideo()
@@ -159,7 +169,7 @@ namespace MenuAppUI
                 || selection > 6
                 )
             {
-                Console.WriteLine("You need to select a number between 1 and 5");
+                Console.WriteLine("You need to select a number between 1 and 6");
             }
             
             return selection;

@@ -8,26 +8,27 @@ namespace MenuAppBLL.Services
 {
     class Service : IService
     {
+        IVideoRepository repo;
+
+        public Service(IVideoRepository repo)
+        {
+            this.repo = repo;
+        }
+
         public Video Create(Video vid)
         {
-            Video newVid;
-            FakeDB.videos.Add(newVid = new Video()
-            {
-                Id = FakeDB.Id++,
-                Title = vid.Title,
-                Genre = vid.Genre
-            });
-            return newVid;
+            
+            return this.repo.Create(vid);
         }
 
         public List<Video> GetAll()
         {
-            return new List<Video>(FakeDB.videos);
+            return this.repo.GetAll();
         }
 
         public Video Get(int Id)
         {
-            return FakeDB.videos.FirstOrDefault(x => x.Id == Id);
+            return this.repo.Get(Id);
         }
 
         public Video Update(Video vid)
@@ -44,9 +45,12 @@ namespace MenuAppBLL.Services
 
         public Video Delete(int Id)
         {
-            var vid = Get(Id);
-            FakeDB.videos.Remove(vid);
-            return vid;
+            return this.repo.Delete(Id);
+        }
+
+        public List<Video> FindVideoByTitle(string title)
+        {
+            return this.repo.FindVideoByTitle(title);
         }
     }
 }

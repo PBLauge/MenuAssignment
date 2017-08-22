@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MenuAppEntity;
 
-namespace MenuAppBLL
+namespace MenuAppDAL
 {
-    public interface IService
+    public interface IVideoRepository
     {
         //C
         Video Create(Video vid);
@@ -11,12 +13,10 @@ namespace MenuAppBLL
         List<Video> GetAll();
         Video Get(int Id);
         //U
-        Video Update(Video vid);
+        //No Update, It is a task for unit of work.
         //D
         Video Delete(int Id);
         //Search
         List<Video> FindVideoByTitle(string title);
-        
-
     }
 }
