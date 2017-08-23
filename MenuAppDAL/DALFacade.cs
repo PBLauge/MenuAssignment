@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MenuAppDAL.Context;
 using MenuAppDAL.Repositories;
 
 namespace MenuAppDAL
@@ -9,7 +10,7 @@ namespace MenuAppDAL
     {
         public IVideoRepository VideoRepository
         {
-            get { return new VideoRepositoryFakeDB();}
+            get { return new VideoRepositoryEFMemory(new Context.InMemoryContext()); }
         }
     }
 }

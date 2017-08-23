@@ -55,7 +55,6 @@ namespace MenuAppUI
                         SearchVideo();
                         break;
                 }
-                Console.ReadLine();
                 selection = ShowMenu(menuItems);
 
             }
@@ -155,7 +154,6 @@ namespace MenuAppUI
 
         private static int ShowMenu(string[] menuItems)
         {
-            Console.Clear();
             Console.WriteLine("Select what you want to do: \n");
 
             for (int i = 0; i < menuItems.Length; i++)
