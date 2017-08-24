@@ -107,6 +107,7 @@ namespace MenuAppUI
                 video.Title = Console.ReadLine();
                 Console.WriteLine("Genre: ");
                 video.Genre = Console.ReadLine();
+                bllFacade.Service.Update(video);
             }
             else
             {

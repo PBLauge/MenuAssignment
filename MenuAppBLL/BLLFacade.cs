@@ -10,7 +10,7 @@ namespace MenuAppBLL
     {
         public IService Service
         {
-            get { return new Service(new DALFacade().VideoRepository);}
+            get { return new Service(new DALFacade());}
         }
     }
 }

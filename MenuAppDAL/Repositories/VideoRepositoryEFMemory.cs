@@ -22,7 +22,6 @@ namespace MenuAppDAL.Repositories
         {
             
             _context.Videos.Add(vid);
-            _context.SaveChanges();
             return vid;
         }
 
@@ -40,7 +39,6 @@ namespace MenuAppDAL.Repositories
         {
             var vid = Get(Id);
             _context.Videos.Remove(vid);
-            _context.SaveChanges();
             return vid;
         }
 

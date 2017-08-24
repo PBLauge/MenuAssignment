@@ -8,49 +8,76 @@ namespace MenuAppBLL.Services
 {
     class Service : IService
     {
-        IVideoRepository repo;
+        private DALFacade facade;
 
-        public Service(IVideoRepository repo)
+        public Service(DALFacade facade)
         {
-            this.repo = repo;
+            this.facade = facade;
         }
 
         public Video Create(Video vid)
         {
-            
-            return this.repo.Create(vid);
+            using (var uow = facade.UnitOfWork)
+            {
+                var newVid = uow.VideoRepository.Create(vid);
+                uow.Save();
+                return newVid;
+            }
+
         }
 
         public List<Video> GetAll()
         {
-            return this.repo.GetAll();
+            using (var uow = facade.UnitOfWork)
+            {
+                return uow.VideoRepository.GetAll();
+            }
         }
 
         public Video Get(int Id)
         {
-            return this.repo.Get(Id);
+            using (var uow = facade.UnitOfWork)
+            {
+                return uow.VideoRepository.Get(Id);
+            }
         }
 
         public Video Update(Video vid)
         {
-            var videoFromDB = Get(vid.Id);
-            if (videoFromDB == null)
+            using (var uow = facade.UnitOfWork)
             {
-                throw new InvalidOperationException("Video not found");
+                var videoFromDB = uow.VideoRepository.Get(vid.Id);
+                if (videoFromDB == null)
+                {
+                    throw new InvalidOperationException("Video not found");
+                   
+                }
+                videoFromDB.Title = vid.Title;
+                videoFromDB.Genre = vid.Genre;
+                uow.Save();
+                return videoFromDB;
             }
-            videoFromDB.Title = vid.Title;
-            videoFromDB.Genre = vid.Genre;
-            return videoFromDB;
+            
+            
+            
         }
 
         public Video Delete(int Id)
         {
-            return this.repo.Delete(Id);
+            using (var uow = facade.UnitOfWork)
+            {
+                var newVid = uow.VideoRepository.Delete(Id);
+                uow.Save();
+                return newVid;
+            }
         }
 
         public List<Video> FindVideoByTitle(string title)
         {
-            return this.repo.FindVideoByTitle(title);
+            using (var uow = facade.UnitOfWork)
+            {
+                return uow.VideoRepository.FindVideoByTitle(title);
+            }
         }
     }
 }
