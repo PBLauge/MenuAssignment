@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MenuAppDAL.Context;
-using MenuAppEntity;
+using MenuAppDAL.Entities;
 
 namespace MenuAppDAL.Repositories
 {

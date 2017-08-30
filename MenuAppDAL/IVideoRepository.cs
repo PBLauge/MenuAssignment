@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MenuAppEntity;
+using MenuAppDAL.Entities;
 
 namespace MenuAppDAL
 {

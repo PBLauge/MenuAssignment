@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MenuAppDAL\MenuAppDAL.csproj" />
-    <ProjectReference Include="..\MenuAppEntity\MenuAppEntity.csproj" />
   </ItemGroup>
 
 </Project>

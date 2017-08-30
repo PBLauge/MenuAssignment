@@ -1,6 +1,6 @@
 ﻿using System;
 using MenuAppBLL;
-using MenuAppEntity;
+using MenuAppBLL.BO;
 
 namespace MenuAppUI
 {
@@ -11,13 +11,13 @@ namespace MenuAppUI
         static void Main(string[] args)
         {
 
-            bllFacade.Service.Create(new Video()
+            bllFacade.Service.Create(new VideoBO()
             {
                 Title = "Saw",
                 Genre = "Horror"
              });
 
-            bllFacade.Service.Create(new Video()
+            bllFacade.Service.Create(new VideoBO()
             {
                 Title = "Cat does stuff",
                 Genre = "Cat video",
@@ -134,14 +134,14 @@ namespace MenuAppUI
             Console.WriteLine("Genre: ");
             var genre = Console.ReadLine();
 
-            bllFacade.Service.Create(new Video()
+            bllFacade.Service.Create(new VideoBO()
             {
                 Title = title,
                 Genre = genre,
             });
         }
 
-        static Video FindVideoById()
+        static VideoBO FindVideoById()
         {
             Console.WriteLine("Please type in a viable id: ");
             int id;

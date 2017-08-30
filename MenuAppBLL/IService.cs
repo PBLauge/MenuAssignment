@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
-using MenuAppEntity;
+using MenuAppBLL.BO;
 
 namespace MenuAppBLL
 {
     public interface IService
     {
         //C
-        Video Create(Video vid);
+        VideoBO Create(VideoBO vid);
         //R
-        List<Video> GetAll();
-        Video Get(int Id);
+        List<VideoBO> GetAll();
+        VideoBO Get(int Id);
         //U
-        Video Update(Video vid);
+        VideoBO Update(VideoBO vid);
         //D
-        Video Delete(int Id);
+        VideoBO Delete(int Id);
         //Search
-        List<Video> FindVideoByTitle(string title);
+        List<VideoBO> FindVideoByTitle(string title);
         
 
     }
