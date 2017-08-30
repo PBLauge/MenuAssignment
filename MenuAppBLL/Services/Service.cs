@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MenuAppBLL.BO;
+using MenuAppBLL.Converters;
 using MenuAppDAL;
 using MenuAppDAL.Entities;
 
@@ -9,6 +10,8 @@ namespace MenuAppBLL.Services
 {
     class Service : IService
     {
+        VideoConverter conv = new VideoConverter();
+
         private DALFacade facade;
 
         public Service(DALFacade facade)
@@ -20,9 +23,9 @@ namespace MenuAppBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                var newVid = uow.VideoRepository.Create(Convert(vid));
+                var newVid = uow.VideoRepository.Create(conv.Convert(vid));
                 uow.Save();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
 
         }
@@ -31,7 +34,7 @@ namespace MenuAppBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                return uow.VideoRepository.GetAll().Select(Convert).ToList();
+                return uow.VideoRepository.GetAll().Select(conv.Convert).ToList();
             }
         }
 
@@ -39,7 +42,7 @@ namespace MenuAppBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                return Convert(uow.VideoRepository.Get(Id));
+                return conv.Convert(uow.VideoRepository.Get(Id));
             }
         }
 
@@ -56,7 +59,7 @@ namespace MenuAppBLL.Services
                 videoFromDB.Title = vid.Title;
                 videoFromDB.Genre = vid.Genre;
                 uow.Save();
-                return Convert(videoFromDB);
+                return conv.Convert(videoFromDB);
             }
             
             
@@ -69,7 +72,7 @@ namespace MenuAppBLL.Services
             {
                 var newVid = uow.VideoRepository.Delete(Id);
                 uow.Save();
-                return Convert(newVid);
+                return conv.Convert(newVid);
             }
         }
 
@@ -77,28 +80,10 @@ namespace MenuAppBLL.Services
         {
             using (var uow = facade.UnitOfWork)
             {
-                return uow.VideoRepository.FindVideoByTitle(title).Select(Convert).ToList();
+                return uow.VideoRepository.FindVideoByTitle(title).Select(conv.Convert).ToList();
             }
         }
 
-        private Video Convert(VideoBO vid)
-        {
-            return new Video()
-            {
-                Id = vid.Id,
-                Title = vid.Title,
-                Genre = vid.Genre
-            };
-        }
-
-        private VideoBO Convert(Video vid)
-        {
-            return new VideoBO()
-            {
-                Id = vid.Id,
-                Title = vid.Title,
-                Genre = vid.Genre
-            };
-        }
+       
     }
 }
